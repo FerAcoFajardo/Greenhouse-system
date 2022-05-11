@@ -4,7 +4,7 @@ from django import forms
 from .models import Sensor
 
 
-class SensorForm(form.ModelForms):
+class SensorForm(forms.ModelForms):
 
     class Meta:
         model = Sensor
