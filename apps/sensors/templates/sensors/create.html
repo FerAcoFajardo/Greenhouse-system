@@ -16,7 +16,9 @@
     {% load crispy_forms_tags %}
 
     <form method="post">
-        {form|crispy}
+        {{form|crispy}}
+
+        <input type="submit" value="Submit">
     </form>
     
 {% endblock %}
