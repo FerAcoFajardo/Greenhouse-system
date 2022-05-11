@@ -6,5 +6,6 @@ app_name = 'sensors'
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
+    path('create/', views.CreateView.as_view(), name='index'),
     path('api/', api_views.SensorDataCreareAPIView.as_view(), name='api-create'),
 ]

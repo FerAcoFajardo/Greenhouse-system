@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% load static %} 
+
+{% block title %}
+    Create sensor
+{% endblock %}
+
+
+
+{% block css %}
+{% endblock %}
+
+
+
+{% block content %} 
+
+    {% load crispy_forms_tags %}
+
+    <form method="post">
+        {form|crispy}
+    </form>
+    
+{% endblock %}
