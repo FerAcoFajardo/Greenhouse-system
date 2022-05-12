@@ -63,9 +63,15 @@
             data: {
                 datasets: [
                     {
+                        label: 'DHT11',
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        borderColor: 'rgb(255, 99, 132)',
                         data: []
                     },
                     {
+                        label: 'Soil Moisture sensor',
+                        backgroundColor: 'rgba(54, 89, 162, 1)',
+                        borderColor: 'rgb(54, 89, 162)',
                         data: []
                     }
                 ]
@@ -74,20 +80,32 @@
                 scales: {
                     x: {
                         type: 'realtime',
+                        delay: 15000,
                         realtime: {
                             onRefresh: chart => {
-                                chart.data.datasets.forEach(dataset => {
-                                    var settings = {
-                                        "url": "https://greenhouse-empotrados.herokuapp.com/sensors/api/",
-                                        "method": "GET",
-                                        "timeout": 0,
-                                    };
-                                    $.ajax(settings).done(function (response) {
-                                        console.log(response);
-                                        dataset.data.push({
-                                            x: Date.now(),
-                                            y: Math.random()
-                                        });
+
+                                var settings = {
+                                    "url": "https://greenhouse-empotrados.herokuapp.com/sensors/api/",
+                                    "method": "GET",
+                                    "timeout": 0,
+                                };
+                                $.ajax(settings).done(function (response) {
+                                    let results = response.results;
+                                    {% comment %} console.log(results); {% endcomment %}
+                                    // Iterate through each result
+                                    results.forEach(result => {
+                                        // Iterate through each dataset
+                                        if(result.sensor === 1){
+                                            chart.data.datasets[0].data.push({
+                                                x: Date.now(),
+                                                y: result.data
+                                            }); 
+                                        }else if(result.sensor === 2){
+                                            chart.data.datasets[1].data.push({
+                                                x: luxon.DateTime.fromISO(result.date),
+                                                y: result.data
+                                            }); 
+                                        }
                                     });
                                 });
                             }
