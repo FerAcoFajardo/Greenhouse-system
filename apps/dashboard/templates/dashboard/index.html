@@ -84,31 +84,35 @@
                             delay: 15000,
                             onRefresh: chart => {
 
-                                var settings = {
-                                    "url": "https://greenhouse-empotrados.herokuapp.com/sensors/api/",
+                                let settings = {
+                                    "url": "https://greenhouse-empotrados.herokuapp.com/sensors/api/"+1,
                                     "method": "GET",
                                     "timeout": 0,
                                 };
                                 $.ajax(settings).done(function (response) {
-                                    let results = response.results;
-                                    {% comment %} console.log(results); {% endcomment %}
-                                    // Iterate through each result
-                                    results.forEach(result => {
-                                        // Iterate through each dataset
-                                        console.log(result.date)
-                                        if(result.sensor === 1){
-                                            chart.data.datasets[0].data.push({
-                                                x: luxon.DateTime.now(),
-                                                y: result.data
-                                            }); 
-                                        }
-                                        else if(result.sensor === 2){
-                                            chart.data.datasets[1].data.push({
-                                                x: luxon.DateTime.now(),
-                                                y: result.data
-                                            }); 
-                                        }
-                                    });
+                                    console.log(response);
+                                    {% comment %} results.forEach(result => { {% endcomment %}
+                                    chart.data.datasets[0].data.push({
+                                        x: luxon.DateTime.now(),
+                                        y: response.data
+                                    });  
+                                    {% comment %} }); {% endcomment %}
+                                });
+                                
+                                let settings2 = {
+                                    "url": "https://greenhouse-empotrados.herokuapp.com/sensors/api/"+2,
+                                    "method": "GET",
+                                    "timeout": 0,
+                                };
+
+                                $.ajax(settings2).done(function (response) {
+                                    console.log(response);
+                                    {% comment %} results.forEach(result => { {% endcomment %}
+                                    chart.data.datasets[1].data.push({
+                                        x: luxon.DateTime.now(),
+                                        y: response.data
+                                    });  
+                                    {% comment %} }); {% endcomment %}
                                 });
                             }
                         }
