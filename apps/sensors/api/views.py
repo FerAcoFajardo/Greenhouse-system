@@ -8,7 +8,8 @@ from ..models import SensorData
 from .serializers import SensorDataSerializer
 
 
-class SensorDataCreareAPIView(generics.CreateAPIView):
+class SensorDataCreareAPIView(generics.ListCreateAPIView):
+    queryset = SensorData.objects.all()
     serializer_class = SensorDataSerializer
     # permission_classes = [IsAuthenticated]
 
