@@ -23,16 +23,33 @@
 
                     <!-- Start: Chart -->
                     <div class="row">
-                        <div class="col-lg-12 mb-4">
+                        <div class="col-lg-6 mb-4">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="text-primary fw-bold m-0">Realtime temperature</h6>
+                                    <h6 class="text-primary fw-bold m-0">Temperature</h6>
                                 </div>
 
                                 <div class="card-body">
                                     <div>
-                                        <canvas id="myChart"></canvas>
+                                        <canvas id="temperatureChart"></canvas>
                                     </div>
+                                    <small><i>* Sampling is made every 15 seconds</i></small>
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                        <div class="col-lg-6 mb-4">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="text-primary fw-bold m-0">Soil Moisture</h6>
+                                </div>
+
+                                <div class="card-body">
+                                    <div>
+                                        <canvas id="soilMoistureChart"></canvas>
+                                    </div>
+                                    <small><i>* Sampling is made every 15 seconds</i></small>
                                 </div>
                             </div>
 
@@ -67,12 +84,6 @@
                         backgroundColor: 'rgba(255, 99, 132, 0.5)',
                         borderColor: 'rgb(255, 99, 132)',
                         data: []
-                    },
-                    {
-                        label: 'Soil Moisture sensor',
-                        backgroundColor: 'rgba(54, 89, 162, 1)',
-                        borderColor: 'rgb(54, 89, 162)',
-                        data: []
                     }
                 ]
             },
@@ -90,40 +101,68 @@
                                     "timeout": 0,
                                 };
                                 $.ajax(settings).done(function (response) {
-                                    console.log(response);
-                                    {% comment %} results.forEach(result => { {% endcomment %}
                                     chart.data.datasets[0].data.push({
                                         x: luxon.DateTime.now(),
                                         y: response.data
                                     });  
-                                    {% comment %} }); {% endcomment %}
                                 });
                                 
-                                let settings2 = {
+                            }
+                        }
+                    }
+        
+                }        
+            }
+        };
+        const temperatureChart = new Chart(
+            document.getElementById('temperatureChart'),
+            config
+        );
+    </script>
+    
+    <script>
+        const configMoisture = {
+            type: 'line',
+            data: {
+                datasets: [
+                    {
+                        label: 'Soil Moisture sensor',
+                        backgroundColor: 'rgba(54, 89, 162, 1)',
+                        borderColor: 'rgb(54, 89, 162)',
+                        data: []
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'realtime',
+                        realtime: {
+                            delay: 15000,
+                            onRefresh: chart => {
+                                
+                                let settings = {
                                     "url": "https://greenhouse-empotrados.herokuapp.com/sensors/api/"+2,
                                     "method": "GET",
                                     "timeout": 0,
                                 };
 
-                                $.ajax(settings2).done(function (response) {
-                                    console.log(response);
-                                    {% comment %} results.forEach(result => { {% endcomment %}
-                                    chart.data.datasets[1].data.push({
+                                $.ajax(settings).done(function (response) {
+                                    chart.data.datasets[0].data.push({
                                         x: luxon.DateTime.now(),
                                         y: response.data
                                     });  
-                                    {% comment %} }); {% endcomment %}
                                 });
                             }
                         }
                     }
-                }
+        
+                }        
             }
         };
-
-        const myChart = new Chart(
-            document.getElementById('myChart'),
-            config
+        const soilMoistureChart = new Chart(
+            document.getElementById('soilMoistureChart'),
+            configMoisture
         );
     </script>
 {% endblock %}
