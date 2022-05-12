@@ -11,7 +11,7 @@ from .serializers import SensorDataSerializer
 class SensorDataCreareAPIView(generics.ListCreateAPIView):
     queryset = SensorData.objects.all()
     serializer_class = SensorDataSerializer
-    order_by = '-date'
+    ordering = ['date']
     # permission_classes = [IsAuthenticated]
 
     # def perform_create(self, serializer):
