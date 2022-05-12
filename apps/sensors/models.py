@@ -26,7 +26,7 @@ class SensorData(models.Model):
         db_table = 'sensors_data'
         verbose_name = "Sensor Data"
         verbose_name_plural = "Sensors Data"
-        ordering = ['id']
+        ordering = ['date']
 
     def __str__(self):
         return f'Sensor data: {self.data} - Sensor: {self.sensor} - Date: {self.date}'
