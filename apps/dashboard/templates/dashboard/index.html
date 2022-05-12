@@ -95,14 +95,16 @@
                                     // Iterate through each result
                                     results.forEach(result => {
                                         // Iterate through each dataset
+                                        console.log(result.date)
                                         if(result.sensor === 1){
                                             chart.data.datasets[0].data.push({
-                                                x: Date.now(),
+                                                x: luxon.DateTime.now(),
                                                 y: result.data
                                             }); 
-                                        }else if(result.sensor === 2){
+                                        }
+                                        else if(result.sensor === 2){
                                             chart.data.datasets[1].data.push({
-                                                x: luxon.DateTime.fromISO(result.date),
+                                                x: luxon.DateTime.now(),
                                                 y: result.data
                                             }); 
                                         }
