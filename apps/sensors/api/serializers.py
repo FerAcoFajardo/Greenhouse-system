@@ -7,4 +7,5 @@ class SensorDataSerializer(serializers.ModelSerializer):
         fields = [
             'data',
             'sensor',
+            'date'
         ]

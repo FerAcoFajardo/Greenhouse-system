@@ -9,6 +9,8 @@ class IndexView(ListView):
     model = SensorData
     template_name = 'sensordata/index.html'
     context_object_name = 'sensordata'
+    ordering = ['-date']
+    queryset = SensorData.objects.all().order_by('-date')
     paginate_by = 20
 
 

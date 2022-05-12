@@ -8,8 +8,10 @@ from ..models import SensorData
 from .serializers import SensorDataSerializer
 
 
-class SensorDataCreareAPIView(generics.CreateAPIView):
+class SensorDataCreareAPIView(generics.ListCreateAPIView):
+    queryset = SensorData.objects.all().order_by('-date')
     serializer_class = SensorDataSerializer
+    ordering = ['-date']
     # permission_classes = [IsAuthenticated]
 
     # def perform_create(self, serializer):
