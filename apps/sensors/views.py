@@ -9,6 +9,7 @@ class IndexView(ListView):
     model = SensorData
     template_name = 'sensordata/index.html'
     context_object_name = 'sensordata'
+    order_by = 'date'
     paginate_by = 20
 
 
